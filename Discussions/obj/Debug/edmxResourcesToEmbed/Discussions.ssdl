@@ -1,0 +1,67 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="discussionsModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Discussion">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Date" Type="datetime" Nullable="false" />
+    <Property Name="Location" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="Subject" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="Outcome" Type="varchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Employee">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="FirstName" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="LastName" Type="varchar" MaxLength="100" Nullable="false" />
+  </EntityType>
+  <EntityType Name="EmployeeDiscussion">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="IsObserver" Type="bit" Nullable="false" />
+    <Property Name="EmployeeId" Type="int" Nullable="false" />
+    <Property Name="DiscussionId" Type="int" Nullable="false" />
+  </EntityType>
+  <Association Name="FK__EmployeeD__Discu__4AB81AF0">
+    <End Role="Discussion" Type="Self.Discussion" Multiplicity="1" />
+    <End Role="EmployeeDiscussion" Type="Self.EmployeeDiscussion" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Discussion">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="EmployeeDiscussion">
+        <PropertyRef Name="DiscussionId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__EmployeeD__Emplo__49C3F6B7">
+    <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
+    <End Role="EmployeeDiscussion" Type="Self.EmployeeDiscussion" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Employee">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="EmployeeDiscussion">
+        <PropertyRef Name="EmployeeId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="discussionsModelStoreContainer">
+    <EntitySet Name="Discussion" EntityType="Self.Discussion" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Employee" EntityType="Self.Employee" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="EmployeeDiscussion" EntityType="Self.EmployeeDiscussion" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK__EmployeeD__Discu__4AB81AF0" Association="Self.FK__EmployeeD__Discu__4AB81AF0">
+      <End Role="Discussion" EntitySet="Discussion" />
+      <End Role="EmployeeDiscussion" EntitySet="EmployeeDiscussion" />
+    </AssociationSet>
+    <AssociationSet Name="FK__EmployeeD__Emplo__49C3F6B7" Association="Self.FK__EmployeeD__Emplo__49C3F6B7">
+      <End Role="Employee" EntitySet="Employee" />
+      <End Role="EmployeeDiscussion" EntitySet="EmployeeDiscussion" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

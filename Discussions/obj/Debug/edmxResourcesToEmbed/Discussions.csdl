@@ -1,0 +1,71 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="discussionsModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Discussion">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Date" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="Location" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Subject" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Outcome" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="EmployeeDiscussions" Relationship="Self.FK__EmployeeD__Discu__24927208" FromRole="Discussion" ToRole="EmployeeDiscussion" />
+  </EntityType>
+  <EntityType Name="Employee">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="FirstName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="LastName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="EmployeeDiscussions" Relationship="Self.FK__EmployeeD__Emplo__239E4DCF" FromRole="Employee" ToRole="EmployeeDiscussion" />
+  </EntityType>
+  <EntityType Name="EmployeeDiscussion">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="EmployeeId" Type="Int32" Nullable="false" />
+    <Property Name="DiscussionId" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Discussion" Relationship="Self.FK__EmployeeD__Discu__24927208" FromRole="EmployeeDiscussion" ToRole="Discussion" />
+    <NavigationProperty Name="Employee" Relationship="Self.FK__EmployeeD__Emplo__239E4DCF" FromRole="EmployeeDiscussion" ToRole="Employee" />
+    <Property Name="IsObserver" Type="Boolean" Nullable="false" />
+  </EntityType>
+  <Association Name="FK__EmployeeD__Discu__24927208">
+    <End Role="Discussion" Type="Self.Discussion" Multiplicity="1" />
+    <End Role="EmployeeDiscussion" Type="Self.EmployeeDiscussion" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Discussion">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="EmployeeDiscussion">
+        <PropertyRef Name="DiscussionId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__EmployeeD__Emplo__239E4DCF">
+    <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
+    <End Role="EmployeeDiscussion" Type="Self.EmployeeDiscussion" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Employee">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="EmployeeDiscussion">
+        <PropertyRef Name="EmployeeId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="discussionsEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Discussions" EntityType="Self.Discussion" />
+    <EntitySet Name="Employees" EntityType="Self.Employee" />
+    <EntitySet Name="EmployeeDiscussions" EntityType="Self.EmployeeDiscussion" />
+    <AssociationSet Name="FK__EmployeeD__Discu__24927208" Association="Self.FK__EmployeeD__Discu__24927208">
+      <End Role="Discussion" EntitySet="Discussions" />
+      <End Role="EmployeeDiscussion" EntitySet="EmployeeDiscussions" />
+    </AssociationSet>
+    <AssociationSet Name="FK__EmployeeD__Emplo__239E4DCF" Association="Self.FK__EmployeeD__Emplo__239E4DCF">
+      <End Role="Employee" EntitySet="Employees" />
+      <End Role="EmployeeDiscussion" EntitySet="EmployeeDiscussions" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

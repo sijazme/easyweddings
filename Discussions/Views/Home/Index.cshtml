@@ -1,0 +1,74 @@
+﻿@model Discussions.Models.IndexViewModel
+@{
+    ViewBag.Title = "Index";
+}
+
+
+<div class="form-group">
+    <div class="col-md-offset-0">
+       
+        <a class="btn btn-primary btn-lg" href='@Url.Action("Create")'>Create</a>
+    </div>
+</div>
+<h2 class="text-primary text-uppercase">Safety Discussions</h2>
+
+<br />
+
+<table class="table">
+    <tr>
+        <th>
+            Date
+        </th>
+
+        <th>
+            Observer
+        </th>
+
+        <th>
+            Location
+        </th>
+        <th>
+            Subject
+        </th>
+        <th>
+            Outcome
+        </th>
+
+        <th>
+            Participants
+        </th>
+       
+        <th></th>
+    </tr>
+    @foreach (var item in Model.Discussions)
+    {
+        <tr>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.DateString)
+            </td>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.ObserverName)
+            </td>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.Location)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Subject)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Outcome)
+            </td>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.ParticipantList)
+            </td>
+
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.Id })              
+            </td>
+        </tr>
+    }
+</table>

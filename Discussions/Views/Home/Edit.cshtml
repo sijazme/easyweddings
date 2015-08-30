@@ -1,0 +1,117 @@
+﻿@model Discussions.Models.EditViewModel
+@{
+    ViewBag.Title = "Edit Safety Discussion";
+}
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    
+
+    <div class="form-horizontal">
+
+        <h4>Edit Safety Discussion</h4>
+        <hr />
+        @Html.ValidationSummary(true)
+        @Html.HiddenFor(model => model.Id)
+  
+        <div class="form-group">
+            @Html.LabelFor(model => model.Date, new { @class = "control-label col-md-2" })
+      
+            <div class="col-md-10">
+                @Html.TextBoxFor(model => model.Date, new
+                       {
+                           id = "dateofdiscussion",
+                           @Value = Model.Date.ToString("dd/MM/yyyy"),
+                           data_date_format = System.Globalization.CultureInfo.CurrentCulture.DateTimeFormat.ShortDatePattern.ToLower(),
+                           @class = "datepicker",
+                           placeholder = "Enter date of discussion here..."
+                       })
+                    @Html.ValidationMessageFor(model => model.Date)
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.Location, new { @class = "control-label col-md-2" })
+            <div class="col-md-6">
+                @Html.TextBoxFor(model => model.Location, new { @class = "form-control", maxlength = "100", placeholder = "Enter discussion location here..." })
+                @Html.ValidationMessageFor(model => model.Location)               
+            </div>
+           
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.ObserverId, "Observer", new { @class = "control-label col-md-2" })
+            <div class="col-md-6">
+               
+                @Html.DropDownListFor(model => model.ObserverId, Model.Observers, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.ObserverId)
+
+               
+            </div>
+        </div>
+
+        <div class="form-group">
+            
+            @Html.LabelFor(model => model.ParticipantId, "Participant", new { @class = "control-label col-md-2" })
+            <div class="col-md-6">               
+                @Html.DropDownListFor(model => model.ParticipantId, Model.Participants, new { @class = "form-control dropdown" })
+                @Html.ValidationMessageFor(model => model.ParticipantId)
+            </div>
+
+        </div>
+       
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Subject, new { @class = "control-label col-md-2" })
+            <div class="col-md-6">
+               
+                @Html.TextBoxFor(model => model.Subject, new { @class = "form-control", maxlength = "100", placeholder = "Enter discussion subject here..." })
+                @Html.ValidationMessageFor(model => model.Subject)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Outcome, new { @class = "control-label col-md-2" })
+            <div class="col-md-6">
+                @Html.TextAreaFor(model => model.Outcome, new { @class = "outbox form-control", maxlength = "1000", rows = "6" })
+                @Html.ValidationMessageFor(model => model.Outcome)
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-6">
+                <input type="submit" value="Save" class="btn btn-primary btn-lg" />
+            </div>
+        </div>
+    </div>
+}
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+<link rel="stylesheet" href="~/Content/bootstrap-datepicker.css">
+<link rel="stylesheet" href="~/Content/bootstrap.css">
+<script src="~/Scripts/bootstrap-datepicker.js"></script>
+
+<script>
+
+   
+    $("#dateofdiscussion").datepicker({
+        language: "en-AU",
+        format: "dd/mm/yyyy",
+        autoclose: true,
+        showStatus: true,
+        showWeeks: true,        
+        autoSize: true,
+        gotoCurrent: true,
+        showAnim: "blind",
+        highlightWeek: true
+    });
+
+    $.validator.addMethod("date",
+           function (value, element) {
+               return this.optional(element) || parseDate(value, "dd-MM-yyyy") !== null;
+           });
+</script>
+
+    }

@@ -1,0 +1,24 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>@ViewBag.Title</title>
+
+    @Styles.Render("~/bundles/styles")
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    
+</head>
+<body>    
+    <div class="container body-content">
+        <img style="float: right;" alt="EasyWeddings.com.au - Your perfect day made easy!" src="~/Images/ew-logo.svg" data-fallback="//easyweddings-framework-v4.s3.amazonaws.com/images/country/en-au/ew-logo.png" />
+
+        @RenderBody()
+    </div>
+
+    @Scripts.Render("~/bundles/scripts")
+    @RenderSection("scripts", required: false)
+</body>
+</html>
